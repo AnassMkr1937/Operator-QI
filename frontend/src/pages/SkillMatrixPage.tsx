@@ -27,7 +27,7 @@ export default function SkillMatrixPage() {
   const [lineFilter, setLineFilter] = useState('')
 
   const { data: operators = [], isLoading: loadingOps } = useOperators()
-  const { data: operations = [], isLoading: loadingOps2 } = useOperations()
+  const { data: operations = [], isLoading: loadingOperations } = useOperations()
   const { data: snapshots = [], isLoading: loadingSnaps } = useSkillSnapshots()
 
   const teams = useMemo(() => [...new Set(operators.map((o) => o.team))].sort(), [operators])
@@ -43,7 +43,7 @@ export default function SkillMatrixPage() {
     [operations, lineFilter]
   )
 
-  const loading = loadingOps || loadingOps2 || loadingSnaps
+  const loading = loadingOps || loadingOperations || loadingSnaps
 
   function handleExport() {
     const header = ['Opérateur', ...filteredOperations.map((op) => op.code)].join(',')
