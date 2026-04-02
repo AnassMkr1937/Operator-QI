@@ -145,7 +145,8 @@ def readiness_check() -> dict[str, Any]:
         check_db_connection()
         return {"status": "ready", "database": "connected"}
     except Exception as exc:  # noqa: BLE001
+        logger.warning("readiness_check.db_unreachable", error=str(exc))
         return JSONResponse(  # type: ignore[return-value]
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            content={"status": "not_ready", "database": "unreachable", "error": str(exc)},
+            content={"status": "not_ready", "database": "unreachable"},
         )
