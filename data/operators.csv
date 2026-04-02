@@ -1,0 +1,21 @@
+matricule,full_name,team,shift,status
+OP-001,Ahmed Benali,A,matin,present
+OP-002,Fatima Zohra Alami,A,matin,present
+OP-003,Youssef Chakir,A,matin,absent
+OP-004,Nadia Berrada,B,apres-midi,present
+OP-005,Khalid Mansouri,B,apres-midi,present
+OP-006,Samira Tazi,B,apres-midi,present
+OP-007,Omar Bensouda,C,nuit,present
+OP-008,Leila Ouali,C,nuit,present
+OP-009,Hassan Benchekroun,C,nuit,conge
+OP-010,Zineb Hajji,A,matin,present
+OP-011,Mourad Sekkat,A,matin,present
+OP-012,Amina Lahlou,B,apres-midi,present
+OP-013,Rachid Filali,B,apres-midi,absent
+OP-014,Sara Belhaj,C,nuit,present
+OP-015,Mehdi Kettani,A,matin,present
+OP-016,Houda Chaoui,B,apres-midi,present
+OP-017,Karim Idrissi,C,nuit,present
+OP-018,Noura Fassi,A,matin,present
+OP-019,Bilal Ouazzani,B,apres-midi,present
+OP-020,Malika Zniber,C,nuit,present

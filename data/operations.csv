@@ -1,0 +1,13 @@
+code,name,line,criticality,nominal_cycle_time_s
+OP-TRIM-01,Pose garniture porte avant gauche,Trim,4,45
+OP-TRIM-02,Pose garniture porte avant droite,Trim,4,45
+OP-TRIM-03,Installation tableau de bord,Trim,5,120
+OP-TRIM-04,Pose moquette plancher,Trim,2,60
+OP-CHASSIS-01,Montage berceau moteur,Chassis,5,180
+OP-CHASSIS-02,Installation suspension avant,Chassis,5,150
+OP-CHASSIS-03,Pose ligne d'échappement,Chassis,3,90
+OP-FINAL-01,Contrôle qualité final,Final,5,300
+OP-FINAL-02,Réglage géométrie roues,Final,4,240
+OP-ELEC-01,Pose faisceau électrique avant,Electrique,4,75
+OP-ELEC-02,Installation batterie et connectiques,Electrique,5,90
+OP-ELEC-03,Test systèmes électroniques,Electrique,5,180
