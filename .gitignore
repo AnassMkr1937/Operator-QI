@@ -18,6 +18,11 @@ htmlcov/
 .coverage
 coverage.xml
 
+# SQLite dev/test databases
+*.db
+*.sqlite
+*.sqlite3
+
 # Node
 node_modules/
 dist/

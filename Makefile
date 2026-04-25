@@ -4,7 +4,7 @@
 .DEFAULT_GOAL := help
 COMPOSE = docker compose
 
-.PHONY: help up down build logs test lint fmt clean
+.PHONY: help up down build logs test lint fmt clean migrate import-data
 
 help:			## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
@@ -33,6 +33,17 @@ lint:			## Lint all code
 fmt:			## Auto-format code
 	cd backend && python -m ruff format app/ tests/
 	cd frontend && npx prettier --write src/
+
+migrate:		## Run Alembic migrations (requires DATABASE_URL env var or active compose)
+	cd backend && alembic upgrade head
+
+import-data:		## Import sample CSV data (requires running backend)
+	curl -s -X POST http://localhost:8000/api/v1/import/operators \
+		-F "file=@data/operators.csv;type=text/csv" | python -m json.tool
+	curl -s -X POST http://localhost:8000/api/v1/import/operations \
+		-F "file=@data/operations.csv;type=text/csv" | python -m json.tool
+	curl -s -X POST http://localhost:8000/api/v1/import/assignments \
+		-F "file=@data/assignments.csv;type=text/csv" | python -m json.tool
 
 clean:			## Remove containers, volumes and caches
 	$(COMPOSE) down -v --remove-orphans

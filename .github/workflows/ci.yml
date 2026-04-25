@@ -31,6 +31,9 @@ jobs:
       - name: Lint (ruff)
         run: python -m ruff check app/ tests/
 
+      - name: Alembic migration check (SQLite)
+        run: alembic upgrade head
+
       - name: Tests
         run: python -m pytest tests/ -v --tb=short
 

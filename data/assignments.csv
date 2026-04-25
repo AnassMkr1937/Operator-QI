@@ -1,0 +1,9 @@
+operator_employee_id,operation_code,scheduled_date,status,notes
+EMP001,OP001,2025-06-02,confirmed,Priorité haute
+EMP001,OP003,2025-06-10,pending,
+EMP002,OP002,2025-06-03,confirmed,
+EMP003,OP003,2025-06-05,pending,Maintenance préventive mensuelle
+EMP004,OP004,2025-06-04,confirmed,
+EMP005,OP002,2025-06-06,pending,
+EMP006,OP003,2025-06-07,confirmed,
+EMP007,OP001,2025-06-09,pending,Formation en cours
