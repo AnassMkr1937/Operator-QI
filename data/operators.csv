@@ -1,0 +1,9 @@
+employee_id,name,email,department,hire_date,is_active
+EMP001,Alice Martin,alice.martin@example.com,Production,2022-03-15,true
+EMP002,Bob Dupont,bob.dupont@example.com,Qualité,2021-07-01,true
+EMP003,Carol Durand,carol.durand@example.com,Maintenance,2023-01-10,true
+EMP004,David Leclerc,,Production,2020-11-25,true
+EMP005,Eva Renard,eva.renard@example.com,Qualité,2022-09-05,true
+EMP006,François Bernard,,Maintenance,2019-04-18,true
+EMP007,Géraldine Petit,geraldine.petit@example.com,Production,2024-02-01,true
+EMP008,Henri Moreau,,Logistique,2021-12-12,false

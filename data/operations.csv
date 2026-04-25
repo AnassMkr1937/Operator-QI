@@ -1,0 +1,9 @@
+code,name,description,required_skills,duration_minutes,is_active
+OP001,Assemblage moteur,Montage complet d'un moteur industriel,soudure|mécanique|lecture de plans,120,true
+OP002,Contrôle qualité,Inspection visuelle et métrologie,métrologie|inspection|qualité,60,true
+OP003,Maintenance préventive,Entretien périodique des équipements,maintenance|diagnostic|électricité,90,true
+OP004,Découpe laser,Opération de découpe sur machine CNC,CNC|lecture de plans|sécurité,45,true
+OP005,Peinture industrielle,Application de revêtement de protection,peinture|sécurité chimique,75,true
+OP006,Câblage électrique,Assemblage de faisceaux électriques,électricité|soudure,60,true
+OP007,Réglage machine,Paramétrage et calibration d'équipements,CNC|diagnostic|mécanique,30,true
+OP008,Conditionnement,Emballage et étiquetage produits finis,,20,true
