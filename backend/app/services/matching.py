@@ -180,13 +180,15 @@ def compute_score(
     # ------------------------------------------------------------------
     # 1. Skills component
     # ------------------------------------------------------------------
-    skill_raw_scores: list[float] = []
+    # covered_scores: scores only for skills the operator actually has
+    # (0-score entries for missing skills are excluded from the average but
+    # captured via coverage_ratio, avoiding double-penalisation)
+    covered_scores: list[float] = []
 
     for req in operation.required_skills:
         if req.skill_id not in skills_map:
             # Non-mandatory missing skill (mandatory ones are hard-filtered)
             unmet.append(f"missing non-mandatory skill '{req.skill_id}'")
-            skill_raw_scores.append(0.0)
             continue
 
         op_skill = skills_map[req.skill_id]
@@ -211,14 +213,16 @@ def compute_score(
             elif days_since <= _RECENCY_MODERATE_DAYS:
                 recency_bonus = _RECENCY_MODERATE_BONUS
 
-        skill_raw_scores.append(min(prof_ratio + cert_bonus + recency_bonus, 1.0))
+        covered_scores.append(min(prof_ratio + cert_bonus + recency_bonus, 1.0))
 
     n_required = len(operation.required_skills)
     if n_required == 0:
         raw_skills = 1.0  # No requirements → full score
     else:
-        coverage_ratio = len(skill_raw_scores) / n_required
-        avg_skill = sum(skill_raw_scores) / len(skill_raw_scores) if skill_raw_scores else 0.0
+        # coverage_ratio: fraction of required skills the operator actually has
+        coverage_ratio = len(covered_scores) / n_required
+        # avg_skill: average quality of the skills the operator *does* have
+        avg_skill = sum(covered_scores) / len(covered_scores) if covered_scores else 0.0
         raw_skills = coverage_ratio * avg_skill
 
     # ------------------------------------------------------------------
@@ -295,7 +299,7 @@ def build_explanation(
     if n_required > 0:
         parts.append(
             f"covers {n_covered}/{n_required} required skill(s) "
-            f"(skills contribution {breakdown.skills_score:.2f}/0.40)"
+            f"(skills contribution {breakdown.skills_score:.2f}/{WEIGHT_SKILLS:.2f})"
         )
     else:
         parts.append("no specific skills required (full skills credit)")
@@ -304,7 +308,7 @@ def build_explanation(
     if breakdown.raw_history > 0:
         parts.append(
             f"has relevant assignment history "
-            f"(history contribution {breakdown.history_score:.2f}/0.20)"
+            f"(history contribution {breakdown.history_score:.2f}/{WEIGHT_HISTORY:.2f})"
         )
     else:
         parts.append("no assignment history on this operation")
