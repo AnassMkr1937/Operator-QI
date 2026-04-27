@@ -20,9 +20,9 @@ OPERATOR-QI est une plateforme de matching entre opérateurs et missions, basée
 ## Backend (FastAPI)
 
 - **Framework** : FastAPI 0.111+
-- **Base de données** : PostgreSQL via SQLAlchemy + Alembic
+- **Moteur de matching** : algorithme déterministe pondéré (stateless, pas de BDD)
 - **Validation** : Pydantic v2
-- **Tests** : pytest + httpx
+- **Tests** : pytest + httpx (64 tests)
 
 ### Structure
 
@@ -31,11 +31,11 @@ backend/
 ├── app/
 │   ├── main.py          Point d'entrée FastAPI
 │   ├── routers/         Endpoints par domaine
-│   ├── models/          SQLAlchemy ORM models
-│   ├── schemas/         Pydantic schemas
-│   ├── services/        Logique métier
-│   └── db.py            Session database
-└── tests/               Tests pytest
+│   │   └── recommendations.py  POST /api/v1/recommendations/*
+│   ├── schemas/         Pydantic schemas (recommendation.py)
+│   └── services/        Logique métier
+│       └── matching.py  Moteur de scoring/ranking
+└── tests/               Tests pytest (64 tests)
 ```
 
 ## Frontend (React/Vite/TypeScript)
