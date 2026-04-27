@@ -17,6 +17,32 @@ make up
 #   API docs  → http://localhost:8000/docs
 ```
 
+## Moteur de matching (v1)
+
+Le moteur de recommandation est un algorithme déterministe pondéré :
+
+| Composant    | Poids | Description |
+|--------------|-------|-------------|
+| skills       | 0.40  | Couverture des compétences × ratio de maîtrise moyen. Bonus : certification (+0.10), récence ≤30j (+0.10), ≤90j (+0.05). |
+| availability | 0.30  | 1.0 si aucun conflit de planning (conflit → filtre dur). |
+| history      | 0.20  | +0.50 par affectation antérieure sur la même opération (max 1.0) + +0.25 par catégorie similaire (max 0.50). |
+| experience   | 0.10  | (nb_compétences × maîtrise_moyenne) / 25, plafonné à 1.0. |
+
+**Filtres durs** (avant le scoring) :
+- Opérateur inactif
+- Conflit d'affectation sur la même date + vacation
+- Compétence obligatoire absente ou sous le seuil requis
+
+Les ex-æquo sont départagés par `operator_id` (ordre lexicographique ascendant — résultat déterministe).
+
+**Limitations connues (v1)** :
+- Toutes les données (candidats, compétences, affectations) doivent être fournies dans le corps de la requête
+- Similarité des compétences par correspondance exacte sur `skill_id`
+- Signal historique sans décroissance temporelle
+- Poids fixes (pas de personnalisation par opération)
+
+Voir [docs/api.md](docs/api.md) pour les contrats d'endpoint complets.
+
 ## Architecture
 
 ```

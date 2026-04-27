@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.routers.recommendations import router as recommendations_router
+
 app = FastAPI(
     title="OPERATOR-QI API",
     description="Plateforme de matching opérateurs-missions",
@@ -14,6 +16,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(recommendations_router)
 
 
 @app.get("/health", tags=["system"])
