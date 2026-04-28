@@ -17,6 +17,91 @@ make up
 #   API docs  → http://localhost:8000/docs
 ```
 
+## Interface de recommandation (Step 4)
+
+### Lancer le frontend en local
+
+```bash
+cd frontend
+npm install
+npm run dev          # → http://localhost:5173
+```
+
+Le frontend utilise le proxy Vite (configuré dans `vite.config.ts`) pour
+rediriger les appels `/api/*` vers le backend FastAPI sur `http://backend:8000`.
+Pour un développement local sans Docker, assurez-vous que le backend tourne sur
+le port 8000 ou modifiez la cible dans `vite.config.ts`.
+
+### Utiliser l'interface de recommandation
+
+1. **Ouvrir** `http://localhost:5173` dans votre navigateur.
+2. **Remplir** le formulaire "Recommandation d'opérateurs" :
+   - **Identifiant** et **nom** de l'opération (ex. `OP-001`, `Ligne d'assemblage A`)
+   - **Date d'affectation** (ex. `2024-06-15`) et **vacation** (`Matin / Après-midi / Nuit`)
+   - Ajouter les **compétences requises** (identifiant, niveau minimum, obligatoire ou non)
+   - Coller un **tableau JSON de candidats** (ou cliquer "Charger l'exemple")
+   - Régler **Top-N** (nombre de recommandations souhaitées, entre 1 et 100)
+3. **Soumettre** → les candidats éligibles apparaissent classés par score.
+4. **Cliquer "Détails ▼"** sur un candidat pour voir la décomposition complète du score.
+
+### Exemple de requête / réponse
+
+**Candidats JSON (à coller dans le formulaire) :**
+```json
+[
+  {
+    "operator_id": "OP-A",
+    "name": "Alice Martin",
+    "is_active": true,
+    "skills": [
+      { "skill_id": "welding", "proficiency": 4, "certified": true, "last_used_date": "2024-06-01" }
+    ],
+    "assignments": []
+  },
+  {
+    "operator_id": "OP-B",
+    "name": "Bob Dupont",
+    "is_active": true,
+    "skills": [
+      { "skill_id": "welding", "proficiency": 2, "certified": false }
+    ],
+    "assignments": []
+  }
+]
+```
+
+**Réponse attendue (extraite) :**
+```json
+{
+  "recommendations": [
+    {
+      "operator_id": "OP-A",
+      "name": "Alice Martin",
+      "rank": 1,
+      "total_score": 0.826,
+      "breakdown": {
+        "skills_score": 0.346, "availability_score": 0.3,
+        "history_score": 0.0,  "experience_score": 0.032
+      },
+      "unmet_requirements": [],
+      "explanation": "covers 1/1 required skill(s) ..."
+    }
+  ],
+  "total_eligible": 2,
+  "total_candidates": 2,
+  "operation_id": "OP-001",
+  "filtered_out": []
+}
+```
+
+### Tests frontend
+
+```bash
+cd frontend
+npx vitest run          # 28 tests (form validation, results rendering, empty/error states)
+npx eslint src/ --max-warnings 0
+```
+
 ## Moteur de matching (v1)
 
 Le moteur de recommandation est un algorithme déterministe pondéré :

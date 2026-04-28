@@ -8,10 +8,10 @@ describe("App", () => {
     expect(screen.getByText("OPERATOR-QI")).toBeInTheDocument();
   });
 
-  it("renders the subtitle", () => {
+  it("renders the recommendation page subtitle", () => {
     render(<App />);
     expect(
-      screen.getByText("Plateforme de matching opérateurs-missions")
+      screen.getByText(/recommandation de remplacement/i)
     ).toBeInTheDocument();
   });
 });
