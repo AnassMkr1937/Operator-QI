@@ -156,11 +156,11 @@ Operator-QI/
 
 ## Stack technique
 
-- **Backend** : FastAPI, SQLAlchemy, Alembic, PostgreSQL
-- **Frontend** : React 18, Vite, TypeScript, TailwindCSS
-- **Infra** : Docker Compose, PostgreSQL 16
-- **CI/CD** : GitHub Actions
-- **Qualité** : ruff, black, mypy (Python) · ESLint, Prettier (TypeScript)
+- **Backend** : FastAPI 0.111+ · Python 3.12 · moteur de matching stateless (v1)
+- **Frontend** : React 18, Vite 5, TypeScript strict
+- **Infra** : Docker Compose · Nginx (production)
+- **CI/CD** : GitHub Actions (lint + tests sur chaque PR)
+- **Qualité** : ruff, pytest (backend) · ESLint, Vitest (frontend)
 
 ## Conventions
 
@@ -171,6 +171,7 @@ Operator-QI/
 
 ## Documentation
 
+- [Roadmap & plan d'action](ROADMAP.md)
 - [Architecture](docs/architecture.md)
 - [API](docs/api.md)
 - [Déploiement](docs/deployment.md)
