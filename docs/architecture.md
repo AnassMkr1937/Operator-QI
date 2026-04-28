@@ -7,15 +7,18 @@ OPERATOR-QI est une plateforme de matching entre opérateurs et missions, basée
 ## Composants
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                     Docker Compose                      │
-│  ┌──────────┐    ┌──────────┐    ┌──────────────────┐  │
-│  │ Frontend │───▶│ Backend  │───▶│   PostgreSQL 16   │  │
-│  │ React/TS │    │  FastAPI │    │                   │  │
-│  │  :5173   │    │  :8000   │    │      :5432        │  │
-│  └──────────┘    └──────────┘    └──────────────────┘  │
-└─────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────┐
+│                  Docker Compose                 │
+│  ┌──────────┐    ┌──────────────────────────┐  │
+│  │ Frontend │───▶│ Backend (FastAPI)         │  │
+│  │ React/TS │    │ Stateless matching engine │  │
+│  │  :5173   │    │          :8000            │  │
+│  └──────────┘    └──────────────────────────┘  │
+└────────────────────────────────────────────────┘
 ```
+
+> **v1 — stateless** : aucune base de données n'est utilisée dans cette version.
+> PostgreSQL sera ajouté à l'étape de persistance (Step 5+).
 
 ## Backend (FastAPI)
 
@@ -60,8 +63,8 @@ frontend/
 ## Infrastructure
 
 - **Docker Compose** : Orchestration locale
-- **PostgreSQL 16** : Base de données principale
 - **Nginx** : Serveur frontend (production)
+- **PostgreSQL 16** : *(à venir — Step 5 persistance)*
 
 ## CI/CD
 
