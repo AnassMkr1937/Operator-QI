@@ -10,6 +10,7 @@
   --color-warning: #d97706;
   --color-border: #d1d5db;
   --color-bg-subtle: #f9fafb;
+  --color-bg-body: #f3f4f6;
   --color-text: #111827;
   --color-text-muted: #6b7280;
   --radius: 6px;
@@ -24,7 +25,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: #f3f4f6;
+  background: var(--color-bg-body);
   color: var(--color-text);
 }
 

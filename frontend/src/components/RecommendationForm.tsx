@@ -169,7 +169,7 @@ export default function RecommendationForm({ onSubmit, isLoading }: Props) {
           .map(({ _key: _k, ...rest }) => rest),
         assignment_date: values.assignment_date,
         shift: values.shift,
-        category: values.category.trim() || undefined,
+        category: values.category.trim() !== "" ? values.category.trim() : undefined,
       },
       candidates,
       top_n: Number(values.top_n),
