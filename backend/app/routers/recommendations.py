@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 from app.schemas.recommendation import (
     RecommendationRequest,
@@ -10,12 +10,14 @@ from app.schemas.recommendation import (
     ScorePreviewRequest,
     ScorePreviewResponse,
 )
+from app.core.rate_limit import limiter
 from app.services.matching import (
     build_explanation,
     compute_score,
     hard_filter,
     rank_candidates,
 )
+from app.services.auth import require_roles
 
 router = APIRouter(prefix="/api/v1/recommendations", tags=["recommendations"])
 
@@ -29,7 +31,9 @@ router = APIRouter(prefix="/api/v1/recommendations", tags=["recommendations"])
         "Applies hard filters (inactive, conflicting assignment, missing mandatory skill) "
         "then returns the top-N ranked candidates with a full score breakdown."
     ),
+    dependencies=[Depends(require_roles("admin", "manager"))],
 )
+@limiter.limit("30/minute")
 def recommend_operators(body: RecommendationRequest) -> RecommendationResponse:
     recommendations, filtered_out = rank_candidates(
         operation=body.operation,
@@ -55,7 +59,9 @@ def recommend_operators(body: RecommendationRequest) -> RecommendationResponse:
         "the full score breakdown without persisting anything. "
         "Useful for debugging or UI previews."
     ),
+    dependencies=[Depends(require_roles("admin", "manager"))],
 )
+@limiter.limit("30/minute")
 def preview_score(body: ScorePreviewRequest) -> ScorePreviewResponse:
     filter_result = hard_filter(body.candidate, body.operation)
 
